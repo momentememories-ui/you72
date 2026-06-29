@@ -65,7 +65,7 @@
         .wing.right { right: -15px; transform-origin: left center; animation: flapR 0.2s infinite alternate; }
         @keyframes flapL { from { transform: rotate(-25deg); } to { transform: rotate(35deg); } }
         @keyframes flapR { from { transform: rotate(25deg); } to { transform: rotate(-35deg); } }
-        
+         
         .music-hint {
             position: absolute; bottom: 15%; width: 100%; text-align: center;
             animation: pulse 1.5s infinite; color: var(--primary); font-weight: 300;
@@ -223,7 +223,7 @@
 
     <div class="final-msg-container" id="finalMsgContainer">
         <div class="final-msg-box">
-            <h1>เป็นแฟนกับเค้านะ💝</h1>
+            <h1> </h1>
             <p>ขอบคุณที่เข้ามาทำให้โลกสดใส<br>
 ขอดูแลเทออย่างนี้เรื่อยไปนะ<br>
 เทอขอเค้าเป็นแฟนหลายรอบแล้ว<br>
@@ -304,14 +304,14 @@
             if(heartPercent >= 100) setTimeout(() => goTo('page3'), 600);
         }
 
-        // หน้า 3 Logic (ขูด 80% ถึงเปลี่ยนหน้า - ค้างไว้ 5 วินาที)
-        let scratchFinished = false; // กันฟังก์ชันทำงานซ้ำซ้อนตอนตั้งเวลา
+        // หน้า 3 Logic (ขูด 95% ถึงเปลี่ยนหน้า - ค้างไว้ 3 วินาที)
+        let scratchFinished = false; 
         function startScratch() {
             scratchFinished = false;
             const c = document.getElementById('scratchCanvas'); const ctx = c.getContext('2d');
             ctx.fillStyle = '#ffacc5'; ctx.fillRect(0,0,300,300);
             ctx.fillStyle = '#fff'; ctx.font = 'bold 24px Kanit'; ctx.textAlign = 'center';
-            ctx.fillText('ลองขูดดูสิ', 150, 150);
+            ctx.fillText('ลองขูดดูสิ', 150, 260); // ย้ายมาอยู่ด้านล่างตรงกลางของภาพ
             
             let isDrawing = false;
             function scratch(x,y) {
@@ -324,9 +324,9 @@
                 const d = ctx.getImageData(0,0,300,300).data;
                 let cleared = 0;
                 for(let i=3; i<d.length; i+=4) if(d[i]===0) cleared++;
-                if(cleared/(300*300) >= 0.8) { // เมื่อขูดถึง 80%
+                if(cleared/(300*300) >= 0.95) { // แก้ไขให้ขูดถึง 95%
                     scratchFinished = true;
-                    setTimeout(() => goTo('page4'), 3000); // หน่วงเวลา 5 วินาทีก่อนไปหน้า 4
+                    setTimeout(() => goTo('page4'), 3000); // หน่วงเวลา 3 วินาทีก่อนไปหน้า 4
                 }
             }
             const move = (e) => { 
