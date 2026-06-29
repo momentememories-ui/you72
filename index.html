@@ -87,6 +87,13 @@
             border: 8px solid white; border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;
         }
+        .scratch-text-below {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-align: center;
+        }
 
         /* --- PAGE 4: GALLERY GAME --- */
         .room-scene {
@@ -197,6 +204,7 @@
             <img src="photo7.jpg" style="width:100%; height:100%; object-fit:cover;">
             <canvas id="scratchCanvas" width="300" height="300" style="position:absolute; top:0; left:0; cursor:pointer;"></canvas>
         </div>
+        <div class="scratch-text-below">ลองขูดดูสิ</div> 
     </div>
 
     <div id="page4" class="page" style="padding:0;">
@@ -304,14 +312,12 @@
             if(heartPercent >= 100) setTimeout(() => goTo('page3'), 600);
         }
 
-        // หน้า 3 Logic (ขูด 95% ถึงเปลี่ยนหน้า - ค้างไว้ 3 วินาที)
+        // หน้า 3 Logic (ปรับเงื่อนไขขูด 98% และดีเลย์ 3 วินาที)
         let scratchFinished = false; 
         function startScratch() {
             scratchFinished = false;
             const c = document.getElementById('scratchCanvas'); const ctx = c.getContext('2d');
             ctx.fillStyle = '#ffacc5'; ctx.fillRect(0,0,300,300);
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 24px Kanit'; ctx.textAlign = 'center';
-            ctx.fillText('ลองขูดดูสิ', 150, 260); // ย้ายมาอยู่ด้านล่างตรงกลางของภาพ
             
             let isDrawing = false;
             function scratch(x,y) {
@@ -324,9 +330,9 @@
                 const d = ctx.getImageData(0,0,300,300).data;
                 let cleared = 0;
                 for(let i=3; i<d.length; i+=4) if(d[i]===0) cleared++;
-                if(cleared/(300*300) >= 0.95) { // แก้ไขให้ขูดถึง 95%
+                if(cleared/(300*300) >= 0.98) { // ปรับให้ขูดถึง 98%
                     scratchFinished = true;
-                    setTimeout(() => goTo('page4'), 3000); // หน่วงเวลา 3 วินาทีก่อนไปหน้า 4
+                    setTimeout(() => goTo('page4'), 3000); // ค้างไว้ 3 วินาทีแล้วไปหน้าถัดไป
                 }
             }
             const move = (e) => { 
